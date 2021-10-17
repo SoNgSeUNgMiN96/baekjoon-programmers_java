@@ -32,7 +32,6 @@ public class BOJ2109 {
         return i;
     }
 
-
     public static void quickSort(int arr[][], int l, int r){        //퀵소트 여기서 사용하는 배열에 맞게 구현함.
         if (l<r){
             int j= partition(arr,l,r);
