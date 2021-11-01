@@ -1,18 +1,18 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 
 
-class heapImp<E>{
-    public ArrayList heap;
+class heapImp2<E>{      //지난번 구현해둔 힙 재탕!
+    public ArrayList<E> heap;
 
-    public heapImp(){
-        heap = new ArrayList<E>();
+    public heapImp2(){
+        heap = new ArrayList<>();
     }
+
     public int getHeapSize(){
         return heap.size();
     }
-
 
     public void makeHeap(){
         E first = null;
@@ -27,7 +27,6 @@ class heapImp<E>{
     }
 
     public void insertMinHeap(E data){        //힙이름으로 해당힙을 호출하여, 힙에 데이터 삽입
-
         heap.add(data);
         int index = heap.size()-1;
 
@@ -75,52 +74,45 @@ class heapImp<E>{
 
 
 
-public class programmersDiskDiskController {
-
-
-    public static int solution(int[][] jobs) {
-        int answer = 0, sum=0 , time, length = jobs.length;
-        int []temp = {0,0};
-        heapImp heap = new heapImp<int[]>();
-        heap.makeHeap();
-
-        Arrays.sort(jobs, new Comparator<int[]>() {
-            @Override
-            public int compare(int [] a, int []b) {
-                return a[0] - b[0];
-            }
-        });
-
-        time = jobs[0][0];
-        heap.insertMinHeap(jobs[0]);
-
-        int i=1, count=0 , code=1;
-
-        while (count<length){
-            code = 1;
-            while (i<length&&time>=jobs[i][0]){       //일단 다 넣기
-                heap.insertMinHeap(jobs[i]);
-                i++;
-            }
-            if (heap.getHeapSize()>1&&((int[])heap.preview())[0]<=time){        //넣어진 요소가 있고,
-                code =0;
-                temp = (int[])heap.deleteRootMinHeap();     //하나 뽑기
-                count++;
-                time += temp[1] ;   //작업을 처리한다.
-                sum += (time - temp[0]);    //방금 작업의 대기값을 넣어준다.
-            }
-            if(code==1&&i<length){    //빼낸 요소가 없다면,
-                time = jobs[i][0];      //뒷 첫 작업까지 시간동기화
-            }
-        }
-        answer = sum/length;
-
-        return answer;
-    }
+public class BOJ2493 {
 
     public static void main(String[] args) throws Exception {
-        int dist[][] = 	{{0, 3}, {2, 6}, {1, 9}};
-        System.out.println(solution(dist));
 
+        int N  , answer[] , minheight ;
+
+        int[] tower;
+        String temp[];
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        N = Integer.parseInt(br.readLine());
+        temp = new String[N];
+        answer = new int[N];
+        temp = br.readLine().split(" ");
+
+        heapImp2 heap = new heapImp2<int[]>();
+        heap.makeHeap();
+
+        minheight = Integer.parseInt(temp[N-1]);       //높이 동기화
+
+
+        for (int i=N-1;i>=0;i--){
+            if(minheight<Integer.parseInt(temp[i])){        //최저층보다 높은 층이 나타난다면
+                while (heap.getHeapSize()>1&&((int[])heap.preview())[1]<Integer.parseInt(temp[i])){   //방금 빌딩보다 작은 애들을
+                    answer[((int[])heap.deleteRootMinHeap())[0]] = i+1 ;        //answer에 기록
+                }
+                tower = new int[2];
+                tower[0] = i; tower[1] = Integer.parseInt(temp[i]);
+                heap.insertMinHeap(tower);
+                minheight = Integer.parseInt(temp[i]);
+            }
+            else {      //만약 높이가 작다면 (같음도 포함?)
+                tower = new int[2];
+                tower[0] = i; tower[1] = Integer.parseInt(temp[i]);
+                heap.insertMinHeap(tower);
+                minheight = Integer.parseInt(temp[i]);  //최저층 동기화
+            }
+        }
+        for (int i=0;i<N;i++){
+            System.out.print(answer[i]+" ");
+        }
     }
 }
