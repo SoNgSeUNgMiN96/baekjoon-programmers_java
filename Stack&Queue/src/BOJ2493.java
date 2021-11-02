@@ -7,7 +7,10 @@ import java.util.Stack;
 
 public class BOJ2493 {
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 57da1d2e148184eed87fe6b1bdb0f4a8b478cbd2
     public static void main(String[] args) throws Exception {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));//선언
         int N  , answer[] , minheight ;
