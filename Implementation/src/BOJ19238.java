@@ -19,13 +19,13 @@ class Texi{
 public class BOJ19238 {
 
     public static void main(String[] args) throws Exception {
-        int N , M , K, MAP[][] , numbering =2 , texiNumbering=2 , ktemp=0;
+        int N , M , K, MAP[][] , ktemp=0;
         boolean visited[][];
         HashMap<String,Point> cusdes = new HashMap<String,Point>();
         String customer="";
         Point tempcus, tempdes;
 
-        // N = 맵 사이즈 , M = 손님 수 , K = 연료의 양 , MAP = 맵 , 손님의 번호를 매길 numbering, texiNumering은 택시가 태운 손님, Ktemp는 손님을 태운후연료량
+        // N = 맵 사이즈 , M = 손님 수 , K = 연료의 양 , MAP = 맵 , Ktemp는 손님을 태운후연료량
         Queue<Texi> driving;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
